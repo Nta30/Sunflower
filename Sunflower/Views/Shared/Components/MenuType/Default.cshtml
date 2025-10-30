@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Sunflower.ViewModels.MenuTypeVM>
+@{
+}
+<div class="mb-3">
+    <h4>Categories</h4>
+    <ul class="list-unstyled fruite-categorie">
+        @foreach (var item in Model)
+        {
+            <li>
+                <div class="d-flex justify-content-between fruite-name">
+                    <a asp-controller="Shop" asp-action="Index" asp-route-ProductType="@item.MaLoai">
+                        <i class="fas fa-apple-alt me-2"></i>@item.TenLoai
+                    </a>
+                    <span>@item.SoLuong</span>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
