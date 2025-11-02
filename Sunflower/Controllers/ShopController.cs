@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Sunflower.Models;
 using Sunflower.ViewModels;
+using System.Drawing.Printing;
 using System.Net.WebSockets;
 using System.Security.Cryptography.Pkcs;
 
@@ -13,15 +14,23 @@ namespace Sunflower.Controllers
         public ShopController(Hshop2023Context context) {
             db = context;
         }
-        public IActionResult Index(int? ProductType)
+        public IActionResult Index(int? ProductType, int? Page)
         {
+            int PageSize = 6;
+            int PageNumber = Page ?? 1;
+
             var hangHoas = db.HangHoas.AsQueryable();
+
+            int totalProducts = 0;
 
             if (ProductType.HasValue)
             {
                 hangHoas = hangHoas.Where(p => p.MaLoai == ProductType.Value);
             }
-            var result = hangHoas.Select(p => new ProductVM
+            totalProducts = hangHoas.Count();
+            var result = hangHoas.Skip((PageNumber - 1) * PageSize)
+                                .Take(PageSize)
+                                .Select(p => new ProductVM
             {
                 Mahh = p.MaHh,
                 Tenhh = p.TenHh,
@@ -29,7 +38,11 @@ namespace Sunflower.Controllers
                 Hinh = p.Hinh ?? "",
                 MotaNgan = p.MoTaDonVi ?? "",
                 TenLoai = p.MaLoaiNavigation.TenLoai
-            });
+            }).ToList();
+
+            ViewBag.ProductType = ProductType;
+            ViewBag.PageNumber = PageNumber;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalProducts / PageSize);
             return View(result);
         }
 

@@ -2,6 +2,7 @@
 using Sunflower.Models;
 using Sunflower.ViewModels;
 using Sunflower.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Sunflower.Controllers
 {
@@ -13,11 +14,14 @@ namespace Sunflower.Controllers
         {
             db = context;
         }
+
+        [Authorize]
         public IActionResult Index()
         {
             return View(Cart);
         }
 
+        [Authorize]
         public IActionResult AddToCart(int ProductId,int Quantity = 1)
         {
             var gioHang = Cart;
@@ -50,6 +54,8 @@ namespace Sunflower.Controllers
             HttpContext.Session.Set(MySetting.CART_KEY, gioHang);
             return RedirectToAction("Index");
         }
+
+        [Authorize]
 
         public IActionResult RemoveFromCart(int ProductId)
         {

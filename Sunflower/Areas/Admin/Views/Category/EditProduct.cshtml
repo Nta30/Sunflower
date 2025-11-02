@@ -1,0 +1,82 @@
+﻿@model Sunflower.ViewModels.AdminProductVM
+
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<h1 class="mb-4 text-primary">Edit Product</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="EditProduct">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="MaHh" />
+
+            <div class="form-group mb-3">
+                <label asp-for="TenHh" class="form-label"></label>
+                <input asp-for="TenHh" class="form-control" />
+                <span asp-validation-for="TenHh" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="TenAlias" class="form-label"></label>
+                <input asp-for="TenAlias" class="form-control" />
+                <span asp-validation-for="TenAlias" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="MaLoai" class="form-label"></label>
+                <select asp-for="MaLoai" class="form-select" asp-items="ViewBag.MaLoai"></select>
+                <span asp-validation-for="MaLoai" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="MaNcc" class="form-label"></label>
+                <select asp-for="MaNcc" class="form-select" asp-items="ViewBag.MaNcc"></select>
+                <span asp-validation-for="MaNcc" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="MoTaDonVi" class="form-label"></label>
+                <input asp-for="MoTaDonVi" class="form-control" />
+                <span asp-validation-for="MoTaDonVi" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="DonGia" class="form-label"></label>
+                <input asp-for="DonGia" class="form-control" />
+                <span asp-validation-for="DonGia" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="NgaySx" class="form-label"></label>
+                <input asp-for="NgaySx" class="form-control" />
+                <span asp-validation-for="NgaySx" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="GiamGia" class="form-label"></label>
+                <input asp-for="GiamGia" class="form-control" />
+                <span asp-validation-for="GiamGia" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="SoLanXem" class="form-label"></label>
+                <input asp-for="SoLanXem" class="form-control" readonly />
+                <span asp-validation-for="SoLanXem" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="MoTa" class="form-label"></label>
+                <textarea asp-for="MoTa" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="MoTa" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-4">
+                <input type="submit" value="Save" class="btn btn-success px-4" />
+                <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
