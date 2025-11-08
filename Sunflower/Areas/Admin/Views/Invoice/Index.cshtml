@@ -1,0 +1,124 @@
+﻿@model IEnumerable<Sunflower.Models.HoaDon>
+
+@{
+    ViewData["Title"] = "Invoice Management";
+    int CurrentPage = (int)ViewBag.PageNumber;
+    int TotalPages = (int)ViewBag.TotalPages;
+
+    int range = 2;
+    int start = Math.Max(1, CurrentPage - range);
+    int end = Math.Min(TotalPages, CurrentPage + range);
+    if (TotalPages > (range * 2) + 1)
+    {
+        if (CurrentPage <= range + 1) { end = (range * 2) + 1; }
+        else if (CurrentPage > TotalPages - range) { start = TotalPages - (range * 2); }
+    }
+}
+
+<h1>Invoice Management</h1>
+<p>@TempData["Message"]</p>
+<div class="bg-light rounded h-100 p-4">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Invoice ID</th>
+                    <th>Customer</th>
+                    <th>Order Date</th>
+                    <th>Delivery Date</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.MaHd</td>
+                        <td>@item.MaKhNavigation.HoTen</td>
+                        <td>@item.NgayDat.ToString("dd/MM/yyyy")</td>
+                        <td>@item.NgayGiao?.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            @if (item.MaTrangThai == 1)
+                            {
+                                <span class="badge bg-warning">@item.MaTrangThaiNavigation.TenTrangThai</span>
+                            }
+                            else if (item.MaTrangThai == 2)
+                            {
+                                <span class="badge bg-info">@item.MaTrangThaiNavigation.TenTrangThai</span>
+                            }
+                            else if (item.MaTrangThai == 3)
+                            {
+                                <span class="badge bg-primary">@item.MaTrangThaiNavigation.TenTrangThai</span>
+                            }
+                            else if (item.MaTrangThai == 4)
+                            {
+                                <span class="badge bg-success">@item.MaTrangThaiNavigation.TenTrangThai</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">@item.MaTrangThaiNavigation.TenTrangThai</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.MaHd">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.MaHd">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.MaHd"
+                               onclick="return confirm('Are you sure you want to delete Invoice #@item.MaHd? This will also remove all related invoice details.');">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@if (TotalPages > 1)
+{
+    <div class="mt-3">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                @if (CurrentPage > 1)
+                {
+                    <li class="page-item"><a class="page-link" asp-action="Index" asp-route-Page="@(CurrentPage - 1)">Previous</a></li>
+                }
+                else
+                {
+                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                }
+
+                @if (start > 1)
+                {
+                    <li class="page-item"><a class="page-link" asp-action="Index" asp-route-Page="1">1</a></li>
+                    @if (start > 2)
+                    {
+                        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                    }
+                }
+
+                @for (int i = start; i <= end; i++)
+                {
+                    <li class="page-item @(i == CurrentPage ? "active" : "")"><a class="page-link" asp-action="Index" asp-route-Page="@i">@i</a></li>
+                }
+
+                @if (end < TotalPages)
+                {
+                    @if (end < TotalPages - 1)
+                    {
+                        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                    }
+                    <li class="page-item"><a class="page-link" asp-action="Index" asp-route-Page="@TotalPages">@TotalPages</a></li>
+                }
+
+                @if (CurrentPage < TotalPages)
+                {
+                    <li class="page-item"><a class="page-link" asp-action="Index" asp-route-Page="@(CurrentPage + 1)">Next</a></li>
+                }
+                else
+                {
+                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                }
+            </ul>
+        </nav>
+    </div>
+}

@@ -87,5 +87,47 @@ namespace Sunflower.Areas.Admin.Controllers
             TempData["Message"] = "Delete succesfully";
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Edit(string UserName)
+        {
+            if(UserName == null)
+            {
+                TempData["Message"] = "User not found";
+                return Redirect("/404");
+            }
+            var khachHang = db.KhachHangs.Find(UserName);
+            if(khachHang == null)
+            {
+                TempData["Message"] = "User not found";
+                return Redirect("/404");
+            }
+            var model = new AdminManageRolesVM
+            {
+                MaKh = khachHang.MaKh,
+                HoTen = khachHang.HoTen,
+                Email = khachHang.Email,
+                VaiTro = khachHang.VaiTro,
+                HieuLuc = khachHang.HieuLuc
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(AdminManageRolesVM model)
+        {
+            var khachHang = db.KhachHangs.Find(model.MaKh);
+            if(khachHang == null)
+            {
+                TempData["Message"] = "User not found";
+                return Redirect("/404");
+            }
+            khachHang.VaiTro = model.VaiTro;
+            khachHang.HieuLuc = model.HieuLuc;
+            db.KhachHangs.Update(khachHang);
+            db.SaveChanges();
+            TempData["Message"] = "Delete succesfully";
+            return RedirectToAction("Index");
+        }
     }
 }
