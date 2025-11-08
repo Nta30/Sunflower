@@ -7,68 +7,104 @@
 <h1 class="mb-4 text-primary">Edit Product</h1>
 
 <div class="row">
-    <div class="col-md-6">
-        <form asp-action="EditProduct">
+    <div class="col-md-12">
+        <form asp-action="EditProduct" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <input type="hidden" asp-for="MaHh" />
+            <input type="hidden" asp-for="Hinh" />
 
-            <div class="form-group mb-3">
-                <label asp-for="TenHh" class="form-label"></label>
-                <input asp-for="TenHh" class="form-control" />
-                <span asp-validation-for="TenHh" class="text-danger"></span>
+            <div class="row">
+
+                <div class="col-md-8">
+                    <div class="form-group mb-3">
+                        <label asp-for="TenHh" class="form-label">Product Name</label>
+                        <input asp-for="TenHh" class="form-control" />
+                        <span asp-validation-for="TenHh" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="TenAlias" class="form-label">Alias</label>
+                        <input asp-for="TenAlias" class="form-control" />
+                        <span asp-validation-for="TenAlias" class="text-danger"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="MaLoai" class="form-label">Product Type</label>
+                                <select asp-for="MaLoai" class="form-select" asp-items="ViewBag.MaLoai"></select>
+                                <span asp-validation-for="MaLoai" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="MaNcc" class="form-label">Supplier</label>
+                                <select asp-for="MaNcc" class="form-select" asp-items="ViewBag.MaNcc"></select>
+                                <span asp-validation-for="MaNcc" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="DonGia" class="form-label">Price</label>
+                                <input asp-for="DonGia" class="form-control" />
+                                <span asp-validation-for="DonGia" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="GiamGia" class="form-label">Discount</label>
+                                <input asp-for="GiamGia" class="form-control" />
+                                <span asp-validation-for="GiamGia" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="NgaySx" class="form-label">Manufacturing Date</label>
+                                <input asp-for="NgaySx" class="form-control" />
+                                <span asp-validation-for="NgaySx" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="SoLanXem" class="form-label">Number Of Views</label>
+                                <input asp-for="SoLanXem" class="form-control" readonly />
+                                <span asp-validation-for="SoLanXem" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="MoTaDonVi" class="form-label">Unit Description</label>
+                        <input asp-for="MoTaDonVi" class="form-control" />
+                        <span asp-validation-for="MoTaDonVi" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <div class="border p-3 rounded mb-3" style="background-color: #f8f9fa;">
+                        <h5 class="form-label">Product Image</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Current Image:</label>
+                            <div>
+                                <img src="~/img/Hinh/HangHoa/@Model.Hinh" alt="@Model.TenHh" class="img-fluid rounded" style="max-width: 100%; border: 1px solid #ddd;" />
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="HinhUpload" class="form-label">Upload New Image (optional)</label>
+                            <input type="file" asp-for="HinhUpload" class="form-control" />
+                        </div>
+                    </div>
+                </div>
             </div>
-
             <div class="form-group mb-3">
-                <label asp-for="TenAlias" class="form-label"></label>
-                <input asp-for="TenAlias" class="form-control" />
-                <span asp-validation-for="TenAlias" class="text-danger"></span>
-            </div>
-
-            <div class="form-group mb-3">
-                <label asp-for="MaLoai" class="form-label"></label>
-                <select asp-for="MaLoai" class="form-select" asp-items="ViewBag.MaLoai"></select>
-                <span asp-validation-for="MaLoai" class="text-danger"></span>
-            </div>
-
-            <div class="form-group mb-3">
-                <label asp-for="MaNcc" class="form-label"></label>
-                <select asp-for="MaNcc" class="form-select" asp-items="ViewBag.MaNcc"></select>
-                <span asp-validation-for="MaNcc" class="text-danger"></span>
-            </div>
-
-            <div class="form-group mb-3">
-                <label asp-for="MoTaDonVi" class="form-label"></label>
-                <input asp-for="MoTaDonVi" class="form-control" />
-                <span asp-validation-for="MoTaDonVi" class="text-danger"></span>
-            </div>
-
-            <div class="form-group mb-3">
-                <label asp-for="DonGia" class="form-label"></label>
-                <input asp-for="DonGia" class="form-control" />
-                <span asp-validation-for="DonGia" class="text-danger"></span>
-            </div>
-
-            <div class="form-group mb-3">
-                <label asp-for="NgaySx" class="form-label"></label>
-                <input asp-for="NgaySx" class="form-control" />
-                <span asp-validation-for="NgaySx" class="text-danger"></span>
-            </div>
-
-            <div class="form-group mb-3">
-                <label asp-for="GiamGia" class="form-label"></label>
-                <input asp-for="GiamGia" class="form-control" />
-                <span asp-validation-for="GiamGia" class="text-danger"></span>
-            </div>
-
-            <div class="form-group mb-3">
-                <label asp-for="SoLanXem" class="form-label"></label>
-                <input asp-for="SoLanXem" class="form-control" readonly />
-                <span asp-validation-for="SoLanXem" class="text-danger"></span>
-            </div>
-
-            <div class="form-group mb-3">
-                <label asp-for="MoTa" class="form-label"></label>
+                <label asp-for="MoTa" class="form-label">Description</label>
                 <textarea asp-for="MoTa" class="form-control" rows="4"></textarea>
                 <span asp-validation-for="MoTa" class="text-danger"></span>
             </div>
@@ -77,6 +113,7 @@
                 <input type="submit" value="Save" class="btn btn-success px-4" />
                 <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
             </div>
+
         </form>
     </div>
 </div>

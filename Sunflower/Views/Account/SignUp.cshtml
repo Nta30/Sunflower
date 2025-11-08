@@ -63,8 +63,9 @@
 					</div>
 
 					<div class="form-item">
-						<label class="form-label my-3" for="Hinh">Hình<sup>*</sup></label>
-						<input type="file" name="Hinh" class="form-control" />
+						<label asp-for="Hinh" class="form-label my-3"></label>
+						<input asp-for="Hinh" type="file" class="form-control" />
+						<span asp-validation-for="Hinh" class="text-danger"></span>
 					</div>
 				</div>
 				<div class="row g-4 text-center align-items-center justify-content-center pt-4">

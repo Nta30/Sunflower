@@ -20,7 +20,7 @@ namespace Sunflower.Areas.Admin.Controllers
         {
             db = context;
         }
-        public IActionResult Index(int? ProductId, int? Page)
+        public IActionResult Index(int? Page)
         {
             int PageSize = 15;
             int PageNumber = Page ?? 1;
@@ -93,6 +93,12 @@ namespace Sunflower.Areas.Admin.Controllers
                     hangHoa.SoLanXem = product.SoLanXem;
                     hangHoa.MoTa = product.MoTa;
                     hangHoa.MaNcc = product.MaNcc;
+
+                    if(product.HinhUpload != null)
+                    {
+                        hangHoa.Hinh = MyUtil.UpLoadImage(product.HinhUpload, "HangHoa");
+                    }
+
                     db.Entry(hangHoa).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -115,10 +121,16 @@ namespace Sunflower.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddProduct(AdminProductVM product, IFormFile Hinh)
+        public IActionResult AddProduct(AdminProductVM product)
         {
             ViewBag.MaLoai = new SelectList(db.Loais.ToList(), "MaLoai", "TenLoai");
             ViewBag.MaNcc = new SelectList(db.NhaCungCaps.ToList(), "MaNcc", "TenCongTy");
+
+            if(product.HinhUpload == null)
+            {
+                ModelState.AddModelError("HinhUpLoad", "Product Image is required");
+            }
+
             try
             {
                 if (ModelState.IsValid)
@@ -137,9 +149,9 @@ namespace Sunflower.Areas.Admin.Controllers
                         MaNcc = product.MaNcc
                     };
                     product.SoLanXem = 0;
-                    if (Hinh != null)
+                    if (product.HinhUpload != null)
                     {
-                        product.Hinh = MyUtil.UpLoadImage(Hinh, "HangHoa");
+                        hangHoa.Hinh = MyUtil.UpLoadImage(product.HinhUpload, "HangHoa");
                     }
                     db.HangHoas.Add(hangHoa);
                     db.SaveChanges();

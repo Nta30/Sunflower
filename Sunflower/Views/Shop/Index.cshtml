@@ -28,7 +28,7 @@
                         </form>
                     </div>
                     <div class="col-6"></div>
-                    <div class="col-xl-3">                       
+                    <div class="col-xl-3">
                     </div>
                 </div>
                 <div class="row g-4">
@@ -46,28 +46,36 @@
                     </div>
                     <div class="col-lg-9">
                         <div class="row g-4 justify-content-center">
-                            @foreach(var item in Model)
+                            @foreach (var item in Model)
                             {
                                 <div class="col-md-6 col-lg-6 col-xl-4">
-                                <div class="rounded position-relative fruite-item">
-                                    <div class="fruite-img">
-                                        <a asp-controller="Shop" asp-action="Detail" asp-route-ProductId="@item.Mahh">
-                                        <img src="~/img/Hinh/HangHoa/@item.Hinh" class="img-fluid w-100 rounded-top" alt="@item.Tenhh">
-                                        </a>
-                                    </div>
-                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">@item.TenLoai</div>
-                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                        <a asp-controller="Shop" asp-action="Detail" asp-route-ProductId="@item.Mahh">
-                                            <h4>@item.Tenhh</h4>
-                                        </a>
-                                        <p>@item.MotaNgan</p>
-                                        <div class="d-flex justify-content-between flex-lg-wrap">
-                                            <p class="text-dark fs-5 fw-bold mb-0">@item.Dongia$</p>
-                                            <a asp-controller="Cart" asp-action="AddToCart" asp-route-ProductId="@item.Mahh" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                    <div class="rounded position-relative fruite-item">
+                                        <div class="fruite-img ratio ratio-4x3">
+                                            <a asp-controller="Shop" asp-action="Detail" asp-route-ProductId="@item.Mahh">
+                                                <img src="~/img/Hinh/HangHoa/@item.Hinh"
+                                                     class="w-100 h-100 object-fit-cover rounded-top"
+                                                     alt="@item.Tenhh">
+                                            </a>
+                                        </div>
+                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                                             style="top: 10px; left: 10px;">
+                                            @item.TenLoai
+                                        </div>
+                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                            <a asp-controller="Shop" asp-action="Detail" asp-route-ProductId="@item.Mahh">
+                                                <h4>@item.Tenhh</h4>
+                                            </a>
+                                            <p>@item.MotaNgan</p>
+                                            <div class="d-flex justify-content-between flex-lg-wrap">
+                                                <p class="text-dark fs-5 fw-bold mb-0">@item.Dongia$</p>
+                                                <a asp-controller="Cart" asp-action="AddToCart" asp-route-ProductId="@item.Mahh"
+                                                   class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             }
                             <div class="col-12">
                                 <div class="pagination d-flex justify-content-center mt-5">

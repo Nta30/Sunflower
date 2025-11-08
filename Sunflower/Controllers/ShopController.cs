@@ -71,7 +71,7 @@ namespace Sunflower.Controllers
             var data = db.HangHoas.Include(p => p.MaLoaiNavigation).SingleOrDefault(p => p.MaHh == ProductId);
             if (data == null)
             {
-                TempData["Message"] = $"Sản phẩm có mã {ProductId} không tồn tại";
+                TempData["Message"] = $"No item found with ID {ProductId}.";
                 return Redirect("/404");
             }
             var result = new ProductDetailVM

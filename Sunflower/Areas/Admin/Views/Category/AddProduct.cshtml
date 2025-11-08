@@ -5,81 +5,101 @@
 
 <h1 class="mb-4">Add Product</h1>
 
-<h4 class="mb-3">Thông tin hàng hóa</h4>
+<h4 class="mb-3">Product Information</h4>
 <hr />
 
-<div class="row">
-    <div class="col-md-6">
-        <form asp-area="Admin" asp-controller="Category" asp-action="AddProduct" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+<form asp-area="Admin" asp-controller="Category" asp-action="AddProduct" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
+    <div class="row">
+
+        <div class="col-md-8">
             <div class="form-group mb-3">
-                <label asp-for="TenHh" class="form-label"></label>
+                <label asp-for="TenHh" class="form-label">Product Name</label>
                 <input asp-for="TenHh" class="form-control" />
                 <span asp-validation-for="TenHh" class="text-danger"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="TenAlias" class="form-label"></label>
+                <label asp-for="TenAlias" class="form-label">Alias</label>
                 <input asp-for="TenAlias" class="form-control" />
                 <span asp-validation-for="TenAlias" class="text-danger"></span>
             </div>
 
-            <div class="form-group mb-3">
-                <label asp-for="MaLoai" class="form-label"></label>
-                <select asp-for="MaLoai" class="form-select" asp-items="ViewBag.MaLoai">
-                    <option value="">-- Chọn loại sản phẩm --</option>
-                </select>
-                <span asp-validation-for="MaLoai" class="text-danger"></span>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="MaLoai" class="form-label">Product Type</label>
+                        <select asp-for="MaLoai" class="form-select" asp-items="ViewBag.MaLoai">
+                            <option value="">-- Choose product type --</option>
+                        </select>
+                        <span asp-validation-for="MaLoai" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="MaNcc" class="form-label">Supplier</label>
+                        <select asp-for="MaNcc" class="form-select" asp-items="ViewBag.MaNcc">
+                            <option value="">-- Choose supplier --</option>
+                        </select>
+                        <span asp-validation-for="MaNcc" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group mb-3">
-                <label asp-for="MoTaDonVi" class="form-label"></label>
-                <input asp-for="MoTaDonVi" class="form-control" />
-                <span asp-validation-for="MoTaDonVi" class="text-danger"></span>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="DonGia" class="form-label">Price</label>
+                        <input asp-for="DonGia" class="form-control" />
+                        <span asp-validation-for="DonGia" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="GiamGia" class="form-label">Discount</label>
+                        <input asp-for="GiamGia" class="form-control" />
+                        <span asp-validation-for="GiamGia" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group mb-3">
-                <label asp-for="DonGia" class="form-label"></label>
-                <input asp-for="DonGia" class="form-control" />
-                <span asp-validation-for="DonGia" class="text-danger"></span>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="NgaySx" class="form-label">Manufacturing Date</label>
+                        <input asp-for="NgaySx" class="form-control" />
+                        <span asp-validation-for="NgaySx" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="MoTaDonVi" class="form-label">Unit Description</label>
+                        <input asp-for="MoTaDonVi" class="form-control" />
+                        <span asp-validation-for="MoTaDonVi" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group mb-3">
-                <label asp-for="NgaySx" class="form-label"></label>
-                <input asp-for="NgaySx" class="form-control" />
-                <span asp-validation-for="NgaySx" class="text-danger"></span>
-            </div>
+        </div> <div class="col-md-4">
+            <div class="border p-3 rounded mb-3" style="background-color: #f8f9fa;">
+                <h5 class="form-label">Product Image</h5>
 
-            <div class="form-group mb-3">
-                <label for="Hinh" class="form-label">Hinh</label>
-                <input name="Hinh" type="file" class="form-control" />   
+                <div class="form-group mb-3">
+                    <label asp-for="HinhUpload" class="form-label">Upload Image</label>
+                    <input type="file" asp-for="HinhUpload" class="form-control" />
+                    <span asp-validation-for="HinhUpload" class="text-danger"></span>
+                </div>
             </div>
-
-            <div class="form-group mb-3">
-                <label asp-for="GiamGia" class="form-label"></label>
-                <input asp-for="GiamGia" class="form-control" />
-                <span asp-validation-for="GiamGia" class="text-danger"></span>
-            </div>
-
-            <div class="form-group mb-3">
-                <label asp-for="MoTa" class="form-label"></label>
-                <textarea asp-for="MoTa" class="form-control" rows="3"></textarea>
-                <span asp-validation-for="MoTa" class="text-danger"></span>
-            </div>
-
-            <div class="form-group mb-4">
-                <label asp-for="MaNcc" class="form-label"></label>
-                <select asp-for="MaNcc" class="form-select" asp-items="ViewBag.MaNcc">
-                    <option value="">-- Chọn nhà cung cấp --</option>
-                </select>
-                <span asp-validation-for="MaNcc" class="text-danger"></span>
-            </div>
-
-            <div class="form-group d-flex gap-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
-                <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="btn btn-secondary">Back to List</a>
-            </div>
-        </form>
+        </div>
+    </div> <div class="form-group mb-3">
+        <label asp-for="MoTa" class="form-label">Description</label>
+        <textarea asp-for="MoTa" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="MoTa" class="text-danger"></span>
     </div>
-</div>
+
+    <div class="form-group d-flex gap-3">
+        <input type="submit" value="Create" class="btn btn-primary" />
+        <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</form>

@@ -68,5 +68,25 @@ namespace Sunflower.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        [Authorize]
+        public IActionResult UpdateQuantity(int ProductId, int Quantity)
+        {
+            var gioHang = Cart;
+            var item = gioHang.SingleOrDefault(p => p.MaHh == ProductId);
+            if(item != null)
+            {
+                if(Quantity <= 0)
+                {
+                    gioHang.Remove(item);
+                }
+                else
+                {
+                    item.SoLuong = Quantity;
+                }
+                HttpContext.Session.Set(MySetting.CART_KEY, gioHang);
+            }
+            return Json(new { success = true });
+        }
     }
 }

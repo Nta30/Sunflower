@@ -41,25 +41,25 @@
                                 </p>
                             </td>
                             <td>
-                                <p class="mb-0 mt-4">@item.DonGia $</p>
+                                <p class="mb-0 mt-4 price" data-price="@item.DonGia">@item.DonGia $</p>
                             </td>
                             <td>
                                 <div class="input-group quantity mt-4" style="width: 100px;">
                                     <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border update-cart" data-id="@item.MaHh" data-change="-1">
                                             <i class="fa fa-minus"></i>
                                         </button>
                                     </div>
-                                    <input type="text" class="form-control form-control-sm text-center border-0" value="@item.SoLuong">
+                                    <input type="text" class="form-control form-control-sm text-center border-0 cart-qty" value="@item.SoLuong" data-id="@item.MaHh">
                                     <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border update-cart" data-id="@item.MaHh" data-change="1">
                                             <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
                             </td>
                             <td>
-                                <p class="mb-0 mt-4">@item.ThanhTien $</p>
+                                <p class="mb-0 mt-4 line-total" data-id="@item.MaHh">@item.ThanhTien $</p>
                             </td>
                             <td>
                                 <a asp-controller="Cart" asp-action="RemoveFromCart" asp-route-ProductId="@item.MaHh" class="btn btn-md rounded-circle bg-light border mt-4">
@@ -84,12 +84,12 @@
                         <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
                         <div class="d-flex justify-content-between mb-4">
                             <h5 class="mb-0 me-4">Subtotal:</h5>
-                            <p class="mb-0">$@Model.Sum(p => p.ThanhTien)</p>
+                            <p class="mb-0" id="cart-subtotal">$@Model.Sum(p => p.ThanhTien)</p>
                         </div>
                     </div>
                     <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                         <h5 class="mb-0 ps-4 me-4">Total</h5>
-                        <p class="mb-0 pe-4">$@Model.Sum(p => p.ThanhTien)</p>
+                        <p class="mb-0 pe-4" id="cart-total">$@Model.Sum(p => p.ThanhTien)</p>
                     </div>
                     <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
                 </div>
@@ -97,4 +97,47 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script>
+        function updateTotals() {
+            let subtotal = 0;
+
+            $("tr").each(function () {
+                let price = parseFloat($(this).find(".price").data("price"));
+                let qty = parseInt($(this).find(".cart-qty").val());
+                if (!isNaN(price) && !isNaN(qty)) {
+                    let lineTotal = price * qty;
+                    $(this).find(".line-total").text(lineTotal + " $");
+                    subtotal += lineTotal;
+                }
+            });
+
+            $("#cart-subtotal").text("$" + subtotal);
+            $("#cart-total").text("$" + subtotal);
+        }
+
+        $(document).on("click", ".update-cart", function () {
+            let productId = $(this).data("id");
+            let change = parseInt($(this).data("change"));
+            let input = $(`.cart-qty[data-id="${productId}"]`);
+            let newQty = parseInt(input.val()) + change;
+
+            if (newQty <= 0) {
+                window.location.href = `/Cart/RemoveFromCart?ProductId=${productId}`;
+                return;
+            }
+
+            input.val(newQty);
+            updateTotals();
+
+            $.ajax({
+                url: "/Cart/UpdateQuantity",
+                type: "POST",
+                data: { productId: productId, quantity: newQty }
+            });
+        });
+    </script>
+}
+
+
 <!-- Cart Page End -->

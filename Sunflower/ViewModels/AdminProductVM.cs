@@ -19,8 +19,9 @@ namespace Sunflower.ViewModels
 
         public double? DonGia { get; set; }
 
-        [ValidateNever]
         public string? Hinh { get; set; }
+
+        public IFormFile? HinhUpload { get; set; }
 
         public DateTime NgaySx { get; set; }
 

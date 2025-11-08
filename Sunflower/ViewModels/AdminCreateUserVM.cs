@@ -1,9 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Sunflower.ViewModels
 {
-    public class RegisterVM
+    public class AdminCreateUserVM
     {
         [Display(Name = "Username")]
         [Required]
@@ -29,13 +28,13 @@ namespace Sunflower.ViewModels
 
         [Display(Name = "Address")]
         [MaxLength(60, ErrorMessage = "Maximum 60 characters")]
-        public string DiaChi { get; set; }
+        public string? DiaChi { get; set; }
 
         [Display(Name = "Phone Number")]
         [MaxLength(24, ErrorMessage = "Maximum 24 characters")]
         [RegularExpression("^0(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-9])[0-9]{7}$",
             ErrorMessage = "Invalid phone number format")]
-        public string DienThoai { get; set; }
+        public string? DienThoai { get; set; }
 
         [Display(Name = "Email Address")]
         [EmailAddress(ErrorMessage = "Invalid email format")]
@@ -43,5 +42,11 @@ namespace Sunflower.ViewModels
 
         [Display(Name = "Profile Image")]
         public IFormFile? Hinh { get; set; }
+
+        [Display(Name = "Active")]
+        public bool HieuLuc { get; set; } = true;
+
+        [Display(Name = "Role")]
+        public int VaiTro { get; set; } = 0;
     }
 }
